@@ -109,7 +109,7 @@ public class AnimalBase {
             String desc = lineScanner.next();
             String type = lineScanner.next();
             int age = lineScanner.nextInt();
-            double weight = lineScanner.nextDouble();
+            double weight = Double.parseDouble(lineScanner.next());
 
             Animal animal = new Animal(name, desc, type, age, weight);
             animals.add(animal);

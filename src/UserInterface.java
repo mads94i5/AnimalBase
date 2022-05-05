@@ -54,7 +54,7 @@ public class UserInterface {
     }
 
     private void exit() {
-        // TODO: Maybe save before exiting???
+        save();
         System.out.println("Thank you for using ANIMALBASE 2022");
         System.out.println("Please consider upgrading to Enterprise Edition!");
         System.out.println("Subscribe to our newsletter with all the details you need about creating lists of animals!");
