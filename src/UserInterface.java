@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -77,14 +78,15 @@ public class UserInterface {
         System.out.println("""
                 Sort the list of animals by
                 n) Name
+                d) Description
                 t) Type
                 a) Age
                 w) Weight
                 """);
         Scanner input = new Scanner(System.in);
         char sortBy = input.next().trim().toLowerCase().charAt(0);
-        while (sortBy != 'n' && sortBy != 't' && sortBy != 'a' && sortBy != 'w') {
-            System.out.println("Please type 'n', 't', 'a' or 'w'");
+        while (sortBy != 'n' && sortBy != 'd' && sortBy != 't' && sortBy != 'a' && sortBy != 'w') {
+            System.out.println("Please type 'n', 'd', 't', 'a' or 'w'");
             sortBy = input.next().trim().toLowerCase().charAt(0);
         }
 
@@ -108,12 +110,12 @@ public class UserInterface {
             default -> SortDirection.ASC;
         };
 
-        if (sortBy == 'n') {
-            application.sortBy("name", direction);
-        } else if (sortBy == 't') {
-            application.sortBy("type", direction);
-        } else if (sortBy == 'a') {
-            application.sortBy("age", direction);
+        switch (sortBy) {
+            case 'n' -> application.sortBy("name", direction);
+            case 'd' -> application.sortBy("description", direction);
+            case 't' -> application.sortBy("type", direction);
+            case 'a' -> application.sortBy("age", direction);
+            case 'w' -> application.sortBy("weight", direction);
         }
 
         // When sorted, show the list again
@@ -159,13 +161,21 @@ public class UserInterface {
 
     private void load() {
         System.out.println("Loading the database ...");
-        application.loadDatabase();
+        try {
+            application.loadDatabase();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         System.out.println("Done!");
     }
 
     private void save() {
         System.out.println("Saving the database ...");
-        application.saveDatabase();
+        try {
+            application.saveDatabase();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         System.out.println("Saving database completed succesfully");
         System.out.println("You can now exit the application");
     }
